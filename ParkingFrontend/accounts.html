@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Accounts</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+  <div class="container-fluid">
+    <h1 class="text-center mb-5">Manage Accounts</h1>
+    <!-- Accounts Table -->
+    <div class="table-responsive">
+      <table id="accounts-table" class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope = "col">ID</th>
+            <th scope = "col">Family Name</th>
+            <th scope = "col">Email</th>
+            <th scope = "col">Phone</th>
+            <th scope = "col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="accounts-table-body">
+        </tbody>
+      </table>
+      <button id="add-an-account" class="btn btn-discovery btn-lg" style="
+      --bs-btn-padding-y: 0.75rem; 
+      --bs-btn-padding-x: 1.25rem; 
+      --bs-btn-font-size: 1.5rem;">Add New Account</a>
+    </div>
+
+    <!-- Modal for Edit Account -->
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="accountModalLabel">Edit Account</h5>
+              <button type="button" id="account-modal-close" class="btn-close" aria-label="Close"  data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-account-form">
+                <div class="mb-3">
+                  <label for="family-name">Family Name</label>
+                  <input type="text" class="form-control" id="family-name" placeholder="Enter family name">
+                </div>
+  
+                <div class="mb-3">
+                  <label for="contact-email">Contact Email</label>
+                  <input type="email" class="form-control" id="contact-email" placeholder="Enter contact email">
+                </div>
+  
+                <div class="mb-3">
+                  <label for="contact-phone">Contact Phone</label>
+                  <input type="tel" class="form-control" id="contact-phone" placeholder="Enter contact phone">
+                </div>
+
+                <div class="btn-group" style="margin-bottom: 5%; margin-top: 5%;">
+                    <button type="button" class="btn btn-discovery btn-lg">Edit Vehicles</button>
+                    <button 
+                      type="button" 
+                      class="btn btn-discovery dropdown-toggle dropdown-toggle-split" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false"
+                    >
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" id="vehicles-dropdown">
+                      <li><hr class="dropdown-divider" id="vehicles-divider"></li>
+                      <li><a class="dropdown-item" href="#">Add a new Vehicle</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group" style="margin-bottom: 5%; margin-top: 5%;">
+                    <button type="button" class="btn btn-discovery btn-lg">Edit Residents</button>
+                    <button 
+                      type="button" 
+                      class="btn btn-discovery dropdown-toggle dropdown-toggle-split btn-lg" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false"
+                    >
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" id="residents-dropdown">
+                      <li><hr class="dropdown-divider" id="residents-divider"></li>
+                      <li><a class="dropdown-item" id="add-a-resident" href="#">Add a new Resident</a></li>
+                    </ul>
+                </div>
+                <div class="text-end">
+                    <button type="submit" style="margin-bottom: 3%;" class="btn btn-discovery">Save Changes</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Resident Modal -->
+<div class="modal fade" id="addResidentModal" tabindex="-1" aria-labelledby="addResidentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addResidentModalLabel">Add or Edit Resident</h5>
+                <button type="button" id="resident-modal-close" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-resident-form">
+                    <div class="mb-3">
+                        <label for="first-name" class="form-label">First Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="first-name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="last-name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="last-name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="resident-id" class="form-label">Resident ID<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="resident-id" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="alternate-phone" class="form-label">Alternate Phone #</label>
+                        <input type="tel" class="form-control" id="alternate-phone" placeholder="Optional alternate phone #">
+                    </div>
+                </form>
+            </div>
+            <div class="text-end" style="margin-right: 2%;">
+                <button type="submit" class="btn btn-discovery" style="margin-bottom: 3%;" id="save-add-resident">Save Changes</button>
+            </div>
+            <div id="delete-resident-section" class="text-end" style="margin-right: 2%; display: none;">
+              <button type="submit" class="btn btn-danger" style="margin-bottom: 3%;" id="delete-resident">Delete Resident</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Add/Edit Vehicle Modal -->
+ <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleModalLabel">Add or Edit Vehicle</h5>
+                <button type="button" id="vehicle-modal-close" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-vehicle-form">
+                    <div class="mb-3">
+                        <label for="make" class="form-label">Make <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="make" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Model <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="model" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vehicle-id" class="form-label">Vehicle ID<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="vehicle-id" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="color" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="license-plate" class="form-label">License Plate<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="license-plate" required>
+                    </div>
+            
+                </form>
+            </div>
+            <div class="text-end" style="margin-right: 2%;">
+                <button type="submit" class="btn btn-discovery" style="margin-bottom: 3%;" id="save-add-vehicle">Save Changes</button>
+            </div>
+            <div id="delete-vehicle-section" class="text-end" style="margin-right: 2%; display: none;"></div>
+              <button type="submit" class="btn btn-danger" style="margin-bottom: 3%;" id="delete-vehicle">Delete Vehicle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Add New Account Modal -->
+ <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAccountModalLabel">Create a New Account</h5>
+                <button type="button" id="add-account-modal-close" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-account-form">
+                    <div class="mb-3">
+                        <label for="account-id" class="form-label">Account #<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="account-id" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="family-name" class="form-label">Family Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="new-family-name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Contact Email<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="new-email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone-number" class="form-label">Contact Phone Number<span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="new-phone-number" required>
+                    </div>
+                </form>
+            </div>
+            <div class="text-end" style="margin-right: 2%;">
+                <button type="submit" class="btn btn-discovery" style="margin-bottom: 3%;" id="save-add-account">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="/scripts/accountScript.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
