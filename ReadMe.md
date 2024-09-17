@@ -16,7 +16,7 @@
 ## Testing:
 
 1. cd to /ParkingSolution/ParkingAPI.Tests
-2. run command: dotnet test to run unit test suite
+2. run command:  ```dotnet test  ``` to run unit test suite
 
 ## Notable Libraries/Frameworks Used:
 - Nunit: https://nunit.org/
