@@ -4,7 +4,6 @@
 
 1. Clone the repository and cd to /ParkingSolution/ParkingAPI/
 2. Create Local DB Schema by running these commands in your terminal, in order: 
-    -    ``` dotnet ef migrations add ParkingDB ```
     -  ``` dotnet ef database update ```
 3. After creating the DB, start the API with the command: ``` dotnet run  ```
  (Swagger documentation for the API can be accessed at https://localhost:5001/swagger/index.html)
